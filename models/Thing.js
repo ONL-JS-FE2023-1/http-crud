@@ -1,3 +1,5 @@
+const DataBaseError = require('../errors/DataBaseError');
+
 class Thing {
     static _tableName = 'things';
     static _client = null;

@@ -6,9 +6,9 @@ module.exports.createThing = async (req, res, next) => {
         const createdThing = await Thing.create(body);
 
         if(createdThing) {
-            return res.status(201).send(createdThing)
+            return res.status(201).send(createdThing);
         } else {
-            return res.status(400).send();
+            throw new ReferenceError('Reference Error! (createThing - controller)')
         }
     } catch (error) {
         next(error);
