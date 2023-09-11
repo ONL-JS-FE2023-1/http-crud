@@ -1,4 +1,5 @@
 const { Thing } = require('../models/index');
+const DataBaseError = require('../errors/DataBaseError');
 
 module.exports.createThing = async (req, res, next) => {
     const { body } = req;
@@ -8,7 +9,8 @@ module.exports.createThing = async (req, res, next) => {
         if(createdThing) {
             return res.status(201).send(createdThing);
         } else {
-            throw new ReferenceError('Reference Error! (createThing - controller)')
+            throw new DataBaseError();
+            // message не передаємо, будемо використовувати те повідомлення, яке вказали у конструкторі
         }
     } catch (error) {
         next(error);
