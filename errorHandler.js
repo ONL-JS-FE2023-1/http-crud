@@ -1,5 +1,6 @@
 const DataBaseError = require("./errors/DataBaseError");
 const { ValidationError } = require('yup');
+const NotFoundError = require("./errors/NotFoundError");
 
 module.exports.basicErrorHandler = (err, req, res, next) => { // ОБРОБНИК ПОМИЛОК
     if(err instanceof DataBaseError) {
@@ -8,6 +9,10 @@ module.exports.basicErrorHandler = (err, req, res, next) => { // ОБРОБНИ�
 
     if(err instanceof ValidationError) {
         return res.status(400).send('Invalid data');
+    }
+
+    if(err instanceof NotFoundError) {
+        return res.status(404).send(err.message);
     }
 }
 
@@ -109,4 +114,11 @@ module.exports.basicErrorHandler = (err, req, res, next) => { // ОБРОБНИ�
 
 P.S. Глобально, кастомні помилки - помилки, які зрозумілі для вас та інших розробників
 
+*/
+
+/*
++1. Створити кастомну помилку NotFoundError
++2. Використати цю помилку в контроллері getOne
++3. Передбачити NotFoundError в обробнику помилок
++4. Перевірити, чи працює помилка, чи ні
 */

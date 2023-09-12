@@ -1,5 +1,6 @@
 const { Thing } = require('../models/index');
 const DataBaseError = require('../errors/DataBaseError');
+const NotFoundError = require('../errors/NotFoundError');
 
 module.exports.createThing = async (req, res, next) => {
     const { body } = req;
@@ -31,8 +32,11 @@ module.exports.getOne = async (req, res, next) => {
     try {
         const thing = await Thing.findByPk(id);
 
-        // потенційно, тут могла бути перевірка, чи повернулись нам якісь значення
-        return res.status(200).send(thing);
+        if(thing.length === 0) {
+            throw new NotFoundError();
+        } else {
+            return res.status(200).send(thing);
+        }
     } catch (error) {
         next(error);
     }
